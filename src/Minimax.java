@@ -38,7 +38,7 @@ public class Minimax {
         }
 
         LinkedList<Board> children = getChildren(b);
-        if(children.isEmpty()) {
+        if(children.isEmpty() || depth == 5) {
             return new int[]{evaluateBoard(b), curLine[0], curLine[1], curLine[2]};
         }
 
