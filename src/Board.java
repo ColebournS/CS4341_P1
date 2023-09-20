@@ -176,15 +176,15 @@ public class Board {
     //Three int array: direction, x, y
     public ArrayList<int[]> getLegalMoves(){
         ArrayList<int[]> legalLines = new ArrayList<>();
-        for(int i = 0; i <= 9; i++) {
-            for(int j = 0; j <= 10; j++) {
-                if(!this.hs[j][i].isComplete()){
-                    int[] myVals = new int[]{0,j,i};
+        for(int i = 0; i < 9; i++) {
+            for(int j = 0; j < 10; j++) {
+                if(!this.hs[i][j].isComplete()){
+                    int[] myVals = new int[]{0,i,j};
                     legalLines.add(myVals);
                 }
 
-                if(!this.vs[i][j].isComplete()){
-                    int[] myVals = new int[]{1,i,j};
+                if(!this.vs[j][i].isComplete()){
+                    int[] myVals = new int[]{1,j,i};
                     legalLines.add(myVals);
                 }
             }

@@ -34,7 +34,7 @@ public class Minimax {
 
         int[] curLine = b.lastLine;
         if(curLine == null){
-            curLine = new int[]{0,4,4};
+            curLine = b.getLegalMoves().get(0);
         }
 
         LinkedList<Board> children = getChildren(b);
