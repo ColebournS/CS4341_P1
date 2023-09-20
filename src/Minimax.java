@@ -6,7 +6,7 @@ public class Minimax {
     
     public Minimax() {};
 
-    public int[] getBestMove(Board b) {
+    public static int[] getBestMove(Board b) {
 
         int[] bestMove = search(b, 0, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
         int[] coords = new int[4];
@@ -23,9 +23,12 @@ public class Minimax {
         return coords;
     }
 
-    public int[] search(Board b, int depth, boolean isMaxing, int alpha, int beta) {
+    public static int[] search(Board b, int depth, boolean isMaxing, int alpha, int beta) {
 
         int[] curLine = b.lastLine;
+        if(curLine == null){
+            curLine = new int[]{0,0,0};
+        }
 
         LinkedList<Board> children = getChildren(b);
         if(children.isEmpty()) {
@@ -57,7 +60,7 @@ public class Minimax {
         }
     }
 
-    public int evaluateBoard(Board b) {
+    public static int evaluateBoard(Board b) {
 
         int sum = 0;
         for(int i = 0; i < 9; i++) {
@@ -87,18 +90,18 @@ public class Minimax {
 
     }
 
-    public LinkedList<Board> getChildren(Board b) {
+    public static LinkedList<Board> getChildren(Board b) {
         LinkedList<Board> children = new LinkedList<Board>();
-        for(int i = 0; i <= 9; i++) {
-            for(int j = 0; j <= 10; j++) {
-                if(!b.hs[j][i].isComplete()) {
+        for(int i = 0; i < 9; i++) {
+            for(int j = 0; j < 10; j++) {
+                if(!b.vs[j][i].isComplete()) {
                     children.add(b.copy());
-                    children.getLast().hs[j][i].setComplete(true);
+                    children.getLast().vs[j][i].setComplete(true);
                     children.getLast().setLastLine(new int[]{0, j, i});
                 }
-                if(!b.vs[i][j].isComplete()) {
+                if(!b.hs[i][j].isComplete()) {
                     children.add(b.copy());
-                    children.getLast().vs[i][j].setComplete(true);
+                    children.getLast().hs[i][j].setComplete(true);
                     children.getLast().setLastLine(new int[]{1, i, j});
                 }
             }

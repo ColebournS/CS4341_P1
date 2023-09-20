@@ -29,6 +29,8 @@ public class Gameplay {
 
         dir.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
 
+        Board gameBoard = new Board();
+
         while(gameRunning){
             WatchKey key = watchService.take();
             for (WatchEvent<?> event : key.pollEvents()) {
@@ -50,14 +52,14 @@ public class Gameplay {
                             System.out.println("GO File Detected!\n");
                             //-----------------------------------------
 
-                            //TODO: Log opponents Move info here, make into a single func (used 2x)
+                            //Log opponents Move info here, make into a single func (used 2x)
                             String oppMove = fileContents(moveFile);
-                            //int[] oppCoords = coordSanitization(oppMove);
-                            //functionToStoreData(oppCoords);
+                            int[] oppCoords = coordSanitization(oppMove);
+                            saveOpponentMove(gameBoard, oppCoords);
 
-                            //TODO: Calculate Move
-                            //CalculateMoveCoords()
-                            String ourMove = "dannydevito 1,1 1,2";
+                            //Calculate Move
+                            int[] moveVals = Minimax.getBestMove(gameBoard);
+                            String ourMove = "dannydevito " + moveVals[0] + "," + moveVals[1] + " " + moveVals[2] + "," + moveVals[3];
 
                             //Write to moveFile to end turn
                             overwriteFile(moveFile, ourMove);
@@ -65,16 +67,15 @@ public class Gameplay {
                         }
                         else if (fileName.equals(passFile)){
 
-                            //TODO: Pass here, make empty move
+                            //Pass here, make empty move
 
                             //-----------------------------------------
                             System.out.println("PASS File Detected!\n");
                             //-----------------------------------------
 
-                            //TODO: Log opponents Move info here, make into a single func (used 2x)
                             String oppMove = fileContents(moveFile);
                             int[] oppCoords = coordSanitization(oppMove);
-                            //functionToStoreData(oppCoords);
+                            saveOpponentMove(gameBoard, oppCoords);
 
                             //Write Empty move to moveFile
                             String passMove = "dannydevito 0,0 0,0";
@@ -84,7 +85,7 @@ public class Gameplay {
                     }
                 }
             }
-
+            gameBoard.printBoard();
             // Reset the key
             boolean valid = key.reset();
             if (!valid) {
@@ -151,7 +152,7 @@ public class Gameplay {
 
 
     public static int[] coordSanitization(String move){
-        int[] coordVals = new int[4];
+        int[] coordVals = new int[5];
 
         String coords = move.substring(move.length() - 7);
         String coord1 = coords.substring(0,3);
@@ -176,9 +177,18 @@ public class Gameplay {
             coordVals[2] = x2;
             coordVals[3] = y2;
         }
+        if(x2-x1 != 0){
+            coordVals[4] = 0;
+        } else {
+            coordVals[4] = 1;
+        }
 
         return coordVals;
     }
 
+
+    public static void saveOpponentMove(Board board, int[] sanitizedCoords){
+        board.updateLine(sanitizedCoords[0], sanitizedCoords[1], sanitizedCoords[4], -1);
+    }
 
 }
