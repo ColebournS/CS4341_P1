@@ -74,22 +74,6 @@ public class Minimax {
         return sum;
     }
 
-    public LinkedList<Line> getMoves(Board b) {
-        LinkedList<Line> moves = new LinkedList<Line>();
-        for(int i = 0; i <= 9; i++) {
-            for(int j = 0; j <= 10; j++) {
-                if(!b.hs[j][i].isComplete()) {
-                    moves.add(b.hs[j][i]);
-                }
-                if(!b.vs[i][j].isComplete()) {
-                    moves.add(b.vs[i][j]);
-                }
-            }
-        }
-        return moves;
-
-    }
-
     public static LinkedList<Board> getChildren(Board b) {
         LinkedList<Board> children = new LinkedList<Board>();
         for(int i = 0; i < 9; i++) {
