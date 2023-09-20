@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Board {
     
     public Line[][] vs;
@@ -32,5 +34,18 @@ public class Board {
             }
         }
     }
+
+    public ArrayList<Line> getLegalMoves(){
+        ArrayList<Line> legalLines = new ArrayList<>();
+        for(int i = 0; i <= 9; i++) {
+            for(int j = 0; j <= 10; j++) {
+                if(!this.hs[j][i].isComplete()) legalLines.add(this.hs[j][i]);
+
+                if(!this.vs[i][j].isComplete()) legalLines.add(this.vs[i][j]);
+            }
+        }
+        return legalLines;
+    }
+
 
 }
