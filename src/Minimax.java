@@ -39,7 +39,7 @@ public class Minimax {
 
         LinkedList<Board> children = getChildren(b);
         if(children.isEmpty() || depth == 5) {
-            return new int[]{evaluateBoard(b), curLine[0], curLine[1], curLine[2]};
+            return new int[]{evaluateBoard(b, isMaxing), curLine[0], curLine[1], curLine[2]};
         }
 
         if(isMaxing) {
@@ -81,18 +81,19 @@ public class Minimax {
         return sum;
     }
 
-    public static LinkedList<Board> getChildren(Board b) {
+    public static LinkedList<Board> getChildren(Board b, boolean isMaxing) {
         LinkedList<Board> children = new LinkedList<Board>();
+        int boxValue = isMaxing? 1 : -1;
         for(int i = 0; i < 9; i++) {
             for(int j = 0; j < 10; j++) {
                 if(!b.vs[j][i].isComplete()) {
                     children.add(b.copy());
-                    children.getLast().vs[j][i].setComplete(true);
+                    children.getLast().updateLine(j, i, 1, boxValue);
                     children.getLast().setLastLine(new int[]{0, j, i});
                 }
                 if(!b.hs[i][j].isComplete()) {
                     children.add(b.copy());
-                    children.getLast().hs[i][j].setComplete(true);
+                    children.getLast().updateLine(i, j, 0, boxValue);
                     children.getLast().setLastLine(new int[]{1, i, j});
                 }
             }
