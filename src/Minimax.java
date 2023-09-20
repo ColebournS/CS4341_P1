@@ -42,7 +42,7 @@ public class Minimax {
         LinkedList<Board> children = getChildren(b, isMaxing);
         if(children.isEmpty() || depth == 5) {
 
-            return new int[]{evaluateBoard(b), curLine[0], curLine[1], curLine[2]};
+            return new int[]{evaluateBoard(b, isMaxing), curLine[0], curLine[1], curLine[2]};
 
         }
 
@@ -71,14 +71,15 @@ public class Minimax {
         }
     }
 
-    public static int evaluateBoard(Board b) {
+    public static int evaluateBoard(Board b, boolean isMaxing) {
 
         int sum = 0;
+        int oneLineAwayVal = isMaxing? -1 : 1;
         for(int i = 0; i < 9; i++) {
             for(Box aBox: b.boxes[i]) {
                 sum = sum + aBox.completedBy;
                 if(aBox.isOneLineAway()) {
-                    sum = sum - 1;
+                    sum = sum + oneLineAwayVal;
                 }
             }
         }
@@ -104,9 +105,11 @@ public class Minimax {
             }
         }
         // Sort the children list based on the evaluation scores in descending order.
-        Collections.sort(children, Comparator.comparingDouble(child -> -evaluateBoard(child)));
+        // Collections.sort(children, Comparator.comparingDouble(child -> -evaluateBoard(child)));
 
         // Return the top 5 children or all if there are fewer than 5.
-        return new LinkedList<>(children.subList(0, Math.min(5, children.size())));
+        // return new LinkedList<>(children.subList(0, Math.min(5, children.size())));
+
+        return children;
     }
 }
