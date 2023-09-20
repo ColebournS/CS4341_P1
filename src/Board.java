@@ -107,26 +107,6 @@ public class Board {
         this.lastLine = lastLine;
     }
 
-    public void printBoard(){
-        for(int i = 0; i < 9; i++){
-            for(int j = 0; j < 9; j++){
-                System.out.print(".");
-                if(this.hs[i][j].isComplete()) System.out.print("-------");
-                else System.out.print("\t");
-            }
-            System.out.print("\n");
-            if(i < 8){
-                for(int h =0; h < 3; h++){
-                    for(int horisontal=0; horisontal <9; horisontal++){
-                        if(this.vs[i][horisontal].isComplete()) System.out.print("|\t");
-                        else System.out.print(" \t");
-                    }
-                    System.out.print("\n");
-                }
-            }
-        }
-    }
-
     public Board copy() {
         return new Board(this);
     }
