@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Board {
     
     public Line[][] vs;
@@ -17,11 +19,49 @@ public class Board {
 
     }
 
-    public Board(Board board){
-        this.vs = board.vs;
-        this.hs = board.hs;
-        this.boxes = board.boxes;
-        this.lastLine = board.lastLine;
+    public Board(Board board) {
+        this.vs = deepCopyLines(board.vs);
+        this.hs = deepCopyLines(board.hs);
+        this.boxes = deepCopyBoxes(board.boxes);
+        this.lastLine = Arrays.copyOf(board.lastLine, board.lastLine.length);
+    }
+
+    public Board copy() {
+        return new Board(this);
+    }
+
+    private Line[][] deepCopyLines(Line[][] original) {
+        if (original == null) {
+            return null;
+        }
+        
+        int numRows = original.length;
+        Line[][] copy = new Line[numRows][];
+        
+        for (int i = 0; i < numRows; i++) {
+            if (original[i] != null) {
+                copy[i] = Arrays.copyOf(original[i], original[i].length);
+            }
+        }
+        
+        return copy;
+    }
+
+    private Box[][] deepCopyBoxes(Box[][] original) {
+        if (original == null) {
+            return null;
+        }
+        
+        int numRows = original.length;
+        Box[][] copy = new Box[numRows][];
+        
+        for (int i = 0; i < numRows; i++) {
+            if (original[i] != null) {
+                copy[i] = Arrays.copyOf(original[i], original[i].length);
+            }
+        }
+        
+        return copy;
     }
 
     public void initBoxes() {
@@ -105,9 +145,5 @@ public class Board {
 
     public void setLastLine(int[] lastLine) {
         this.lastLine = lastLine;
-    }
-
-    public Board copy() {
-        return new Board(this);
     }
 }
