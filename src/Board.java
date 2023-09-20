@@ -14,6 +14,12 @@ public class Board {
         initLines();
     }
 
+    public Board(Board board) {
+        this.vs = board.vs;
+        this.hs = board.hs;
+        this.boxes = board.boxes;
+    }
+
     public void initBoxes() {
 
         for(int i = 0; i <= 8; i++) {
@@ -31,6 +37,10 @@ public class Board {
                 this.vs[i][j] = new Line();
             }
         }
+    }
+
+    public Board copy() {
+        return new Board(this);
     }
 
 }
