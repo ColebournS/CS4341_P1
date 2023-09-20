@@ -23,11 +23,36 @@ public class Board {
         this.vs = deepCopyLines(board.vs);
         this.hs = deepCopyLines(board.hs);
         this.boxes = deepCopyBoxes(board.boxes);
-        this.lastLine = Arrays.copyOf(board.lastLine, board.lastLine.length);
+        if(board.lastLine != null){
+            this.lastLine = Arrays.copyOf(board.lastLine, board.lastLine.length);
+        } else {
+            this.lastLine = null;
+        }
     }
 
     public Board copy() {
         return new Board(this);
+    }
+
+    public Board copyBoard(){
+        Board newBoard = new Board();
+
+        System.out.println("copying lines");
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 10; j++) {
+                boolean vertVal = this.vs[j][i].isComplete();
+                newBoard.vs[j][i].setComplete(vertVal);
+
+                boolean horizVal = this.hs[i][j].isComplete();
+                newBoard.hs[i][j].setComplete(horizVal);
+
+            }
+        }
+        System.out.println("lines copied");
+        newBoard.initBoxes();
+        newBoard.lastLine = this.lastLine;
+
+        return newBoard;
     }
 
     private Line[][] deepCopyLines(Line[][] original) {
@@ -87,7 +112,7 @@ public class Board {
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 9; j++){
                 System.out.print(".");
-                if(hs[i][j].isComplete()) System.out.print("-------");
+                if(hs[i][j].isComplete()) System.out.print("---");
                 else System.out.print("\t");
             }
             System.out.print("\n");
