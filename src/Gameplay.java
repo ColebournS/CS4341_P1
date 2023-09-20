@@ -10,6 +10,8 @@ public class Gameplay {
     public static final String passFile = "dannydevito.pass";
     public static final String endFile = "end_game";
 
+    public static final Path directoryPath = Path.of("C:\\Users\\Aidan\\Desktop\\Intro to AI\\dots_boxes_referee\\dots_boxes_referee");
+
     //Main function that is while loop that handles all gameplay
 
     //What to do on groupname.go
@@ -20,7 +22,7 @@ public class Gameplay {
     public static void main(String[] args) throws IOException, InterruptedException {
         boolean gameRunning = true;
         Path dir = Paths.get(System.getProperty("user.dir")); //Can manually change Directory as necessary
-
+        dir = directoryPath;
         //-----------------------------------------
         System.out.println(dir);
         //-----------------------------------------
@@ -55,6 +57,7 @@ public class Gameplay {
                             //Log opponents Move info here, make into a single func (used 2x)
                             String oppMove = fileContents(moveFile);
                             int[] oppCoords = coordSanitization(oppMove);
+
                             saveMove(gameBoard, oppCoords, -1);
 
                             //Calculate Move
@@ -107,7 +110,7 @@ public class Gameplay {
      */
     public static boolean isFilePresent(String fileName) {
         String dir = System.getProperty("user.dir");
-
+        dir = directoryPath.toString();
         // Create a File object for the file you want to check
         File target = new File(dir, fileName);
 
@@ -127,6 +130,7 @@ public class Gameplay {
         else{
             try {
                 String dir = System.getProperty("user.dir");
+                dir = directoryPath.toString();
                 File target = new File(dir, fileName);
                 FileWriter writer = new FileWriter(target, false);
                 writer.write(message);
