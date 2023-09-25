@@ -3,11 +3,13 @@ import java.util.List;
 //This class handles the AI movements
 public class Minimax2 {
 
+	static long startTime;
+
 	public Minimax2 () {}
 
 	//Move is called from main to initiate AI Move
 	public static int[] getBestMove(Board2 b) {
-
+		startTime = System.nanoTime();
 		return search(b, 0, b.myMove, Integer.MIN_VALUE, Integer.MAX_VALUE);
 	
 	}
@@ -15,6 +17,7 @@ public class Minimax2 {
 	// returns an int of size 3 where int[2] is the minimax eval, 
 	// int[0] is the row of the line, and int[1] is the column of the line (in our 19x19 array)
 	public static int[] search(Board2 b, int depth, boolean isMaxing, int alpha, int beta) {
+
 
 		List<int[]> moves = b.getLegalMoves();
 
@@ -39,8 +42,12 @@ public class Minimax2 {
 				}
 				alpha = Math.max(bestMove[2], alpha);
 				b.undoMove(move[0], move[1]);
+				b.myMove = isMaxing;
 				if(alpha >= beta) {
 					break;
+				}
+				if(((System.nanoTime() - startTime) / 1000000000) > 8){
+					return bestMove;
 				}
 			}
 			return bestMove;
@@ -59,8 +66,12 @@ public class Minimax2 {
 				}
 				beta = Math.min(bestMove[2], beta);
 				b.undoMove(move[0], move[1]);
+				b.myMove = isMaxing;
 				if(alpha >= beta) {
 					break;
+				}
+				if(((System.nanoTime() - startTime) / 1000000000) > 8){
+					return bestMove;
 				}
 			}
 			return bestMove;

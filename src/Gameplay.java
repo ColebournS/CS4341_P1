@@ -10,7 +10,7 @@ public class Gameplay {
     public static final String passFile = "dannydevito.pass";
     public static final String endFile = "end_game";
 
-    public static final Path directoryPath = Path.of("C:\\Users\\Aidan\\Desktop\\Intro to AI\\refereeV5\\refereeV5\\refereeV5\\dots_boxes_referee");
+    public static final Path directoryPath = Path.of("C:\\Users\\Aidan\\Desktop\\Intro to AI\\refereeV6");
 
     public static void main(String[] args) throws IOException, InterruptedException {
         boolean gameRunning = true;
